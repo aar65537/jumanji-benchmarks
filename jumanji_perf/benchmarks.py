@@ -14,6 +14,7 @@ DOUBLE_WRAPS = [False, True]
 class CompileRolloutBenchmark:
     params = (BATCH_SIZES, DOUBLE_WRAPS)
     param_names = ["batch_size", "double_wrap"]
+    timeout = 120
 
     def setup(self, batch_size: int, double_wrap: bool) -> None:
         key = jax.random.PRNGKey(0)
@@ -30,6 +31,7 @@ class CompileRolloutBenchmark:
 class RunRolloutBenchmark:
     params = (SEED, TOTAL_STEPS, BATCH_SIZES, DOUBLE_WRAPS)
     param_names = ["seed", "total_steps", "batch_size", "double_wrap"]
+    timeout = 120
 
     def setup(
         self, seed: int, total_steps: int, batch_size: int, double_wrap: bool

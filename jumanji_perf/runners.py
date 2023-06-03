@@ -1,4 +1,4 @@
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Tuple, Union
 
 import chex
 import jax
@@ -14,7 +14,11 @@ from jumanji.wrappers import AutoResetWrapper, VmapAutoResetWrapper, VmapWrapper
 @register_pytree_node_class
 class RolloutRunner:
     def __init__(
-        self, key: chex.PRNGKey, total_steps: int, batch_size: int, double_wrap: bool
+        self,
+        key: chex.PRNGKey,
+        total_steps: Union[int, chex.Array],
+        batch_size: int,
+        double_wrap: bool,
     ) -> None:
         self.key = key
         self.total_steps = total_steps
@@ -44,7 +48,7 @@ class RolloutRunner:
         return env
 
     @property
-    def n_steps(self) -> int:
+    def n_steps(self) -> Union[int, chex.Array]:
         return self.total_steps // (1 if self.batch_size == 0 else self.batch_size)
 
     def rollout(self) -> State:
@@ -81,7 +85,7 @@ class RolloutRunner:
 
     def tree_flatten(
         self,
-    ) -> Tuple[Tuple[chex.PRNGKey, int], Dict[str, Any]]:
+    ) -> Tuple[Tuple[chex.PRNGKey, Union[int, chex.Array]], Dict[str, Any]]:
         children = (self.key, self.total_steps)
         aux_data = {"batch_size": self.batch_size, "double_wrap": self.double_wrap}
 

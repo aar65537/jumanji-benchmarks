@@ -3,13 +3,13 @@ from dataclasses import dataclass
 from glob import glob
 from itertools import product
 from math import isnan
-from typing import Any, Dict, List
+from typing import List, Union
 
 
 @dataclass
 class CompileParams:
     batch_size: int
-    double_wrap: bool
+    wrapper: str
 
 
 @dataclass
@@ -17,7 +17,7 @@ class RunParams:
     seed: int
     total_steps: int
     batch_size: int
-    double_wrap: bool
+    wrapper: str
 
 
 @dataclass
@@ -25,7 +25,7 @@ class Benchmark:
     commit_hash: str
     platform: str
     name: str
-    params: Dict[str, Any]
+    params: Union[CompileParams, RunParams]
     result: float
 
     @classmethod
@@ -44,13 +44,25 @@ class Benchmark:
 
                 for param, result in zip(params, results):
                     if name == "time_rollout_compile":
-                        param = CompileParams(int(param[0]), bool(param[1]))
+                        if int(param[0]) == 0:
+                            wrapper = "AutoReset"
+                        elif param[1] == "True":
+                            wrapper = "Vmap(AutoReset)"
+                        else:
+                            wrapper = "VmapAutoReset"
+
+                        param = CompileParams(int(param[0]), wrapper)
+
                     elif name == "time_rollout_run":
+                        if int(param[2]) == 0:
+                            wrapper = "AutoReset"
+                        elif param[3] == "True":
+                            wrapper = "Vmap(AutoReset)"
+                        else:
+                            wrapper = "VmapAutoReset"
+
                         param = RunParams(
-                            int(param[0]),
-                            int(param[1]),
-                            int(param[2]),
-                            param[3] == "True",
+                            int(param[0]), int(param[1]), int(param[2]), wrapper
                         )
                     else:
                         continue

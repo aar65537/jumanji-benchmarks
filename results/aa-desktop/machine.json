@@ -1,0 +1,9 @@
+{
+    "arch": "x86_64",
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13600K",
+    "machine": "aa-desktop",
+    "num_cpu": "20",
+    "os": "Linux 6.2.15-300.fc38.x86_64",
+    "ram": "32612624",
+    "version": 1
+}

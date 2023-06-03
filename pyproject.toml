@@ -30,6 +30,8 @@ secondary = true
 python_version = 3.8
 strict = true
 allow_untyped_calls = true
+allow_untyped_decorators = true
+ignore_missing_imports = true
 
 [tool.ruff]
 select = ["E", "F", "W", "I", "N"]
