@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "jumanji-perf"
+version = "0.1.0"
+description = "Evaluate performance of jumanji package."
+authors = ["Avi Revah <avraham.a.revah@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+jumanji = {git = "https://github.com/instadeepai/jumanji.git"}
+asv = "^0.5.1"
+dash = "^2.10.2"
+pandas = "^2.0.2"
+virtualenv = "^20.23.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "23.3.0"
+mypy = "1.3.0"
+ruff = "0.0.267"
+pytest = "7.3.1"
+
+[[tool.poetry.source]]
+name = "jax"
+url = "https://storage.googleapis.com/jax-releases/jax_cuda_releases.html"
+default = false
+secondary = true
+
+[tool.mypy]
+python_version = 3.8
+strict = true
+allow_untyped_calls = true
+
+[tool.ruff]
+select = ["E", "F", "W", "I", "N"]

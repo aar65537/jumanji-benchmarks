@@ -1,0 +1,25 @@
+{
+    "version": 1,
+    "project": "jumanji",
+    "project_url": "https://instadeepai.github.io/jumanji/",
+    "repo": "https://github.com/aar65537/jumanji.git",
+    "branches": ["perf-improvements-2048"],
+    "show_commit_url": "http://github.com/aar65537/jumanji/commit/",
+    "benchmark_dir": "jumanji_perf",
+    "environment_type": "virtualenv",
+    "install_command": [
+        "in-dir={env_dir} python -mpip install {wheel_file}",
+        "in-dir={env_dir} python -mpip install dash pandas pytest",
+        "in-dir={env_dir} python -mpip install --upgrade \"jax[cuda12_local]==0.4.10\" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html"
+    ],
+    "uninstall_command": [
+        "return-code=any python -mpip uninstall -y {project}",
+        "return-code=any python -mpip uninstall -y dash jax pandas pytest"
+    ],
+    "pythons": ["3.11"],
+    "matrix": {
+        "env": {
+            "JAX_PLATFORM_NAME": ["cuda", "cpu"]
+        }
+    }
+}
