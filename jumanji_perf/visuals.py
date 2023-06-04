@@ -9,6 +9,7 @@ BENCHMARKS = Benchmark.load()
 COMMITS = list({benchmark.commit_hash for benchmark in BENCHMARKS})
 PLATFORMS = sorted(list({benchmark.platform for benchmark in BENCHMARKS}))
 WRAPPERS = sorted(list({benchmark.params.wrapper for benchmark in BENCHMARKS}))
+OPTIONS = {"log_x": True, "markers": True}
 
 
 def figures_by_commit(platform: str, wrapper: str) -> Tuple[go.Figure, go.Figure]:
@@ -32,10 +33,10 @@ def figures_by_commit(platform: str, wrapper: str) -> Tuple[go.Figure, go.Figure
             compile_commits.append(benchmark.commit_hash)
             compile_time.append(benchmark.result)
 
-    run_fig = px.line(x=run_batch_sizes, y=run_rates, color=run_commits, markers=True)
+    run_fig = px.line(x=run_batch_sizes, y=run_rates, color=run_commits, **OPTIONS)
 
     compile_fig = px.line(
-        x=compile_batch_sizes, y=compile_time, color=compile_commits, markers=True
+        x=compile_batch_sizes, y=compile_time, color=compile_commits, **OPTIONS
     )
 
     run_fig.update_layout(
@@ -74,10 +75,10 @@ def figures_by_platform(commit_hash: str, wrapper: str) -> Tuple[go.Figure, go.F
             compile_platforms.append(benchmark.platform)
             compile_time.append(benchmark.result)
 
-    run_fig = px.line(x=run_batch_sizes, y=run_rates, color=run_platforms, markers=True)
+    run_fig = px.line(x=run_batch_sizes, y=run_rates, color=run_platforms, **OPTIONS)
 
     compile_fig = px.line(
-        x=compile_batch_sizes, y=compile_time, color=compile_platforms, markers=True
+        x=compile_batch_sizes, y=compile_time, color=compile_platforms, **OPTIONS
     )
 
     run_fig.update_layout(
@@ -116,10 +117,10 @@ def figures_by_wrappers(commit_hash: str, platform: str) -> Tuple[go.Figure, go.
             compile_wrappers.append(benchmark.params.wrapper)
             compile_time.append(benchmark.result)
 
-    run_fig = px.line(x=run_batch_sizes, y=run_rates, color=run_wrappers, markers=True)
+    run_fig = px.line(x=run_batch_sizes, y=run_rates, color=run_wrappers, **OPTIONS)
 
     compile_fig = px.line(
-        x=compile_batch_sizes, y=compile_time, color=compile_wrappers, markers=True
+        x=compile_batch_sizes, y=compile_time, color=compile_wrappers, **OPTIONS
     )
 
     run_fig.update_layout(
