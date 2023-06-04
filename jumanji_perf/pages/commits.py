@@ -6,12 +6,20 @@ from jumanji_perf.visuals import PLATFORMS, WRAPPERS, figures_by_commit
 
 dash.register_page(__name__)
 
-run_graph = dcc.Graph(figure=go.Figure())
-compile_graph = dcc.Graph(figure=go.Figure())
 platform_input = dcc.RadioItems(PLATFORMS, PLATFORMS[0])
 wrapper_input = dcc.RadioItems(WRAPPERS, WRAPPERS[0])
+run_graph = dcc.Graph(figure=go.Figure(), className="run-graph")
+compile_graph = dcc.Graph(figure=go.Figure(), className="compile-graph")
 
-layout = html.Div([platform_input, wrapper_input, run_graph, compile_graph])
+layout = html.Div(
+    [
+        html.Div([html.Label("Platform:"), platform_input]),
+        html.Div([html.Label("Wrapper:"), wrapper_input]),
+        run_graph,
+        compile_graph,
+    ],
+    className="content",
+)
 
 
 @callback(

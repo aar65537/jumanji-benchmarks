@@ -1,0 +1,44 @@
+.sidebar {
+  left: 0;
+  top: 0;
+  padding-left: 1rem;
+  width: 16rem;
+  background-color: #2F7158;
+  color:#f0dbe3;
+  position: fixed;
+  height: 100%;
+}
+
+.links a {
+  display: block;
+  color:#f0dbe3;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr, 1fr;
+    grid-template-areas: 
+        "input1 input2"
+        "output1 output1"
+        "output2 output2";
+    margin-left: 16rem;
+    padding: 1rem 1rem;
+    justify-items: center;
+}
+
+.commit-dropdown {
+    width: 16rem;
+}
+
+.run-graph {
+    grid-area: output1;
+    width: 100%;
+}
+
+.compile-graph {
+    grid-area: output2;
+    width: 100%;
+}

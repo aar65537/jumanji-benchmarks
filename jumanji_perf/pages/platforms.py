@@ -6,12 +6,20 @@ from jumanji_perf.visuals import COMMITS, WRAPPERS, figures_by_platform
 
 dash.register_page(__name__)
 
-run_graph = dcc.Graph(figure=go.Figure())
-compile_graph = dcc.Graph(figure=go.Figure())
-commit_input = dcc.Dropdown(COMMITS, COMMITS[0])
+commit_input = dcc.Dropdown(COMMITS, COMMITS[0], className="commit-dropdown")
 wrapper_input = dcc.RadioItems(WRAPPERS, WRAPPERS[0])
+run_graph = dcc.Graph(figure=go.Figure(), className="run-graph")
+compile_graph = dcc.Graph(figure=go.Figure(), className="compile-graph")
 
-layout = html.Div([commit_input, wrapper_input, run_graph, compile_graph])
+layout = html.Div(
+    [
+        html.Div([html.Label("Commit:"), commit_input]),
+        html.Div([html.Label("Wrapper:"), wrapper_input]),
+        run_graph,
+        compile_graph,
+    ],
+    className="content",
+)
 
 
 @callback(
