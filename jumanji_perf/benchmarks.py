@@ -31,7 +31,7 @@ class CompileRolloutBenchmark:
 class RunRolloutBenchmark:
     params = (SEED, TOTAL_STEPS, BATCH_SIZES, DOUBLE_WRAPS)
     param_names = ["seed", "total_steps", "batch_size", "double_wrap"]
-    timeout = 120
+    timeout = 300
 
     def setup(
         self, seed: int, total_steps: int, batch_size: int, double_wrap: bool
@@ -41,8 +41,13 @@ class RunRolloutBenchmark:
 
         if os.environ.get("JAX_PLATFORM_NAME") == "cpu" and total_steps != 10**5:
             raise NotImplementedError("Only benchmark 100,000 total steps on cpu.")
-        elif os.environ.get("JAX_PLATFORM_NAME") == "cuda" and runner.n_steps > 100:
-            raise NotImplementedError("Don't benchmark more than 100 steps on gpu.")
+        elif os.environ.get("JAX_PLATFORM_NAME") == "cuda":
+            if runner.n_steps > 100:
+                raise NotImplementedError("Don't benchmark more than 100 steps on gpu.")
+            elif total_steps == 10**8 and not double_wrap:
+                raise NotImplementedError(
+                    "Don't benchmark single wrapped gpu with 10**8 steps."
+                )
 
         self.rollout = jax.jit(runner.rollout)
         self.rollout.lower().compile()

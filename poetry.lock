@@ -554,47 +554,53 @@ files = [
 
 [[package]]
 name = "jax"
-version = "0.4.1"
+version = "0.4.10"
 description = "Differentiate, compile, and transform Numpy code."
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "jax-0.4.1.tar.gz", hash = "sha256:b795a75ca2eabb5d20b83f1aa1e1038dafeca89ee74c9ac6e2b919215cadf427"},
+    {file = "jax-0.4.10.tar.gz", hash = "sha256:1bf0f2720f778f2937301a16a4d5cd3497f13a4d6c970c24a88918a81816a888"},
 ]
 
 [package.dependencies]
-numpy = ">=1.20"
+ml_dtypes = ">=0.1.0"
+numpy = ">=1.21"
 opt_einsum = "*"
-scipy = ">=1.5"
+scipy = ">=1.7"
 
 [package.extras]
 australis = ["protobuf (>=3.13,<4)"]
-ci = ["jaxlib (==0.4.0)"]
-cpu = ["jaxlib (==0.4.1)"]
-cuda = ["jaxlib (==0.4.1+cuda11.cudnn86)"]
-cuda11-cudnn82 = ["jaxlib (==0.4.1+cuda11.cudnn82)"]
-cuda11-cudnn86 = ["jaxlib (==0.4.1+cuda11.cudnn86)"]
-minimum-jaxlib = ["jaxlib (==0.3.22)"]
-tpu = ["jaxlib (==0.4.1)", "libtpu-nightly (==0.1.dev20221212)", "requests"]
+ci = ["jaxlib (==0.4.9)"]
+cpu = ["jaxlib (==0.4.10)"]
+cuda = ["jaxlib (==0.4.10+cuda11.cudnn86)"]
+cuda11-cudnn82 = ["jaxlib (==0.4.10+cuda11.cudnn82)"]
+cuda11-cudnn86 = ["jaxlib (==0.4.10+cuda11.cudnn86)"]
+cuda11-local = ["jaxlib (==0.4.10+cuda11.cudnn86)"]
+cuda11-pip = ["jaxlib (==0.4.10+cuda11.cudnn86)", "nvidia-cublas-cu11 (>=11.11)", "nvidia-cuda-cupti-cu11 (>=11.8)", "nvidia-cuda-nvcc-cu11 (>=11.8)", "nvidia-cuda-runtime-cu11 (>=11.8)", "nvidia-cudnn-cu11 (>=8.6)", "nvidia-cufft-cu11 (>=10.9)", "nvidia-cusolver-cu11 (>=11.4)", "nvidia-cusparse-cu11 (>=11.7)"]
+cuda12-local = ["jaxlib (==0.4.10+cuda12.cudnn88)"]
+cuda12-pip = ["jaxlib (==0.4.10+cuda12.cudnn88)", "nvidia-cublas-cu12", "nvidia-cuda-cupti-cu12", "nvidia-cuda-nvcc-cu12", "nvidia-cuda-runtime-cu12", "nvidia-cudnn-cu12", "nvidia-cufft-cu12", "nvidia-cusolver-cu12", "nvidia-cusparse-cu12"]
+minimum-jaxlib = ["jaxlib (==0.4.7)"]
+tpu = ["jaxlib (==0.4.10)", "libtpu-nightly (==0.1.dev20230511)", "requests"]
 
 [[package]]
 name = "jaxlib"
-version = "0.4.1+cuda11.cudnn86"
+version = "0.4.10+cuda12.cudnn88"
 description = "XLA library for JAX"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "jaxlib-0.4.1+cuda11.cudnn86-cp310-cp310-manylinux2014_x86_64.whl", hash = "sha256:13a4295d9e9a3877770ec5d04a92a38f87b9dc1523501b3bbfcd25270d7bd996"},
-    {file = "jaxlib-0.4.1+cuda11.cudnn86-cp311-cp311-manylinux2014_x86_64.whl", hash = "sha256:d33859b48a1fabf2f1ede3dbe9cd351ce47b35a33963e5eb6b598b32c19d77d7"},
-    {file = "jaxlib-0.4.1+cuda11.cudnn86-cp38-cp38-manylinux2014_x86_64.whl", hash = "sha256:7477e41bb2943756bd7deda1c819ac8f8ecb933be18234a79175f698db962b2d"},
-    {file = "jaxlib-0.4.1+cuda11.cudnn86-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:0d6351065049d47856e7c2fcf0728936e18eca12f40739ec41b96fcaf52bfd26"},
+    {file = "jaxlib-0.4.10+cuda12.cudnn88-cp310-cp310-manylinux2014_x86_64.whl", hash = "sha256:270d6e49962b76fa81e4fb1c0ae13a5264972bee2233cb8f7a1a5db5397d7d12"},
+    {file = "jaxlib-0.4.10+cuda12.cudnn88-cp311-cp311-manylinux2014_x86_64.whl", hash = "sha256:229312443629e224204080c44becf2532238cb670851b7a287b8752cff998b08"},
+    {file = "jaxlib-0.4.10+cuda12.cudnn88-cp38-cp38-manylinux2014_x86_64.whl", hash = "sha256:e4cd21748c0a51038c00788e9ef761cdc2910fba7814a9900f45ce39b13aff50"},
+    {file = "jaxlib-0.4.10+cuda12.cudnn88-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:b052a20e88c8bb781fbb0929b9e93544b76bca0722f5617ea9526bedb99f0084"},
 ]
 
 [package.dependencies]
-numpy = ">=1.20"
-scipy = ">=1.5"
+ml-dtypes = ">=0.1.0"
+numpy = ">=1.21"
+scipy = ">=1.7"
 
 [package.source]
 type = "legacy"
@@ -633,8 +639,8 @@ develop = false
 chex = ">=0.1.3,<0.1.6"
 dm-env = ">=1.5"
 gym = ">=0.22.0"
-jax = ">=0.2.26,<=0.4.1"
-jaxlib = ">=0.1.74,<=0.4.1"
+jax = ">=0.2.26,<=0.4.10"
+jaxlib = ">=0.1.74,<=0.4.10"
 matplotlib = ">=3.3.4"
 numpy = ">=1.19.5"
 Pillow = ">=9.0.0"
@@ -648,7 +654,7 @@ train = ["dm-haiku (==0.0.9)", "hydra-core (==1.3)", "neptune-client (==0.16.15)
 type = "git"
 url = "https://github.com/instadeepai/jumanji.git"
 reference = "HEAD"
-resolved_reference = "50035636628508ea3c87377a924c1750f613881b"
+resolved_reference = "8366f1d9d99188766586e4de5bf112d0be9e748c"
 
 [[package]]
 name = "kiwisolver"
@@ -850,6 +856,43 @@ packaging = ">=20.0"
 pillow = ">=6.2.0"
 pyparsing = ">=2.3.1"
 python-dateutil = ">=2.7"
+
+[[package]]
+name = "ml-dtypes"
+version = "0.1.0"
+description = ""
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "ml_dtypes-0.1.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:377f2d5cfbf809b59188e0bfda4a0774e658541f575b637fee4850d99c2f9fdc"},
+    {file = "ml_dtypes-0.1.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:87aa1cf83d41fed5a40fc27ee57ac4c1bf904e940f082531d3d58f1c318b5928"},
+    {file = "ml_dtypes-0.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:dee8ea629b8e3e20c6649852c1b9deacfa13384ab9337f2c9e717e401d102f23"},
+    {file = "ml_dtypes-0.1.0-cp310-cp310-win_amd64.whl", hash = "sha256:ad765159ac6c18d5ee7d325fcf34d3106a9d9d7a49713d998f5cfa330a1459b4"},
+    {file = "ml_dtypes-0.1.0-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:b9c5578dffd85637a7dd437192de18bc1a14eb6ba7d53ef40de3f84c51c789e5"},
+    {file = "ml_dtypes-0.1.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:36e8518c8fd2c38729f020125f39ef07b045f5c16d0846320c7252d7773285ee"},
+    {file = "ml_dtypes-0.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:99fab8262d175c49bf1655c229244f301274e8289449c350ba4d5b95ade07d9a"},
+    {file = "ml_dtypes-0.1.0-cp311-cp311-win_amd64.whl", hash = "sha256:8de9bbf5bed587a1166699447ea14d1e8fe66d4e812811e37bf2f4d988475476"},
+    {file = "ml_dtypes-0.1.0-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:a29fbf128583673eca0f43def1dbe77e02c1e8b8a8331db2877bbb57d091ef11"},
+    {file = "ml_dtypes-0.1.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:273c306db846005b83a98c9c7ec3dc8fa20e8f11c3772c8e8c20cc12d8abfd4b"},
+    {file = "ml_dtypes-0.1.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:41b6beeaea47e2466b94068664c9a45b2a65dd023aa4e5deeb5a73303661344e"},
+    {file = "ml_dtypes-0.1.0-cp38-cp38-win_amd64.whl", hash = "sha256:2de6c81b0da398d54aabdd7de599f2dfc43e30b65d9fad379a69f4cc4ae165d3"},
+    {file = "ml_dtypes-0.1.0-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:77970beeb3cf6ac559c4b6b393f24778a5abd34fafbaad82d5a0d17d0f148936"},
+    {file = "ml_dtypes-0.1.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:ffb7882dd46399217dc54f37affc899e0a29a4cfb63e5bf733ac0baf4a179c77"},
+    {file = "ml_dtypes-0.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8c5c9fe086756fbc1bf51296431d64429536093cf6e2ba592e042d7fc07c8514"},
+    {file = "ml_dtypes-0.1.0-cp39-cp39-win_amd64.whl", hash = "sha256:c9218175b06764b8ddc95cb18d11a6c4b48a4b103a31c9ea2b2c3cd0cfc369f8"},
+    {file = "ml_dtypes-0.1.0.tar.gz", hash = "sha256:c1fc0afe63ce99069f9d7e0693a61cfd0aea90241fc3821af9953d0c11f4048a"},
+]
+
+[package.dependencies]
+numpy = [
+    {version = ">1.20", markers = "python_version <= \"3.9\""},
+    {version = ">=1.21.2", markers = "python_version > \"3.9\""},
+    {version = ">=1.23.3", markers = "python_version > \"3.10\""},
+]
+
+[package.extras]
+dev = ["absl-py", "pyink", "pylint (>=2.6.0)", "pytest", "pytest-xdist"]
 
 [[package]]
 name = "mypy"

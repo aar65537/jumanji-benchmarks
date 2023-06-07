@@ -7,8 +7,11 @@ from jumanji_perf.types import Benchmark, CompileParams, RunParams
 
 BENCHMARKS = Benchmark.load()
 COMMITS = list({benchmark.commit_hash for benchmark in BENCHMARKS})
+DEFAULT_COMMIT = COMMITS[0] if len(COMMITS) else None
 PLATFORMS = sorted(list({benchmark.platform for benchmark in BENCHMARKS}))
+DEFAULT_PLATFORM = PLATFORMS[0] if len(PLATFORMS) else None
 WRAPPERS = sorted(list({benchmark.params.wrapper for benchmark in BENCHMARKS}))
+DEFAULT_WRAPPER = WRAPPERS[0] if len(WRAPPERS) else None
 OPTIONS = {"log_x": True, "markers": True}
 
 

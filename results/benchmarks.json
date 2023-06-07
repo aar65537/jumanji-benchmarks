@@ -29,14 +29,14 @@
         "repeat": 0,
         "rounds": 2,
         "sample_time": 0.01,
-        "timeout": 120,
+        "timeout": 300,
         "type": "time",
         "unit": "seconds",
         "version": "35128db5892021530fb7303cd56b92bfb28bfd74fe6239aeda1783bc4ad40e6d",
         "warmup_time": -1
     },
     "time_rollout_run": {
-        "code": "class RunRolloutBenchmark:\n    def time_run(self, *_: Any) -> None:\n        jax.block_until_ready(self.rollout())\n\n    def setup(\n        self, seed: int, total_steps: int, batch_size: int, double_wrap: bool\n    ) -> None:\n        key = jax.random.PRNGKey(seed)\n        runner = RolloutRunner(key, total_steps, batch_size, double_wrap)\n    \n        if os.environ.get(\"JAX_PLATFORM_NAME\") == \"cpu\" and total_steps != 10**5:\n            raise NotImplementedError(\"Only benchmark 100,000 total steps on cpu.\")\n        elif os.environ.get(\"JAX_PLATFORM_NAME\") == \"cuda\" and runner.n_steps > 100:\n            raise NotImplementedError(\"Don't benchmark more than 100 steps on gpu.\")\n    \n        self.rollout = jax.jit(runner.rollout)\n        self.rollout.lower().compile()",
+        "code": "class RunRolloutBenchmark:\n    def time_run(self, *_: Any) -> None:\n        jax.block_until_ready(self.rollout())\n\n    def setup(\n        self, seed: int, total_steps: int, batch_size: int, double_wrap: bool\n    ) -> None:\n        key = jax.random.PRNGKey(seed)\n        runner = RolloutRunner(key, total_steps, batch_size, double_wrap)\n    \n        if os.environ.get(\"JAX_PLATFORM_NAME\") == \"cpu\" and total_steps != 10**5:\n            raise NotImplementedError(\"Only benchmark 100,000 total steps on cpu.\")\n        elif os.environ.get(\"JAX_PLATFORM_NAME\") == \"cuda\":\n            if runner.n_steps > 100:\n                raise NotImplementedError(\"Don't benchmark more than 100 steps on gpu.\")\n            elif total_steps == 10**8 and not double_wrap:\n                raise NotImplementedError(\n                    \"Don't benchmark single wrapped gpu with 10**8 steps.\"\n                )\n    \n        self.rollout = jax.jit(runner.rollout)\n        self.rollout.lower().compile()",
         "min_run_count": 2,
         "name": "time_rollout_run",
         "number": 0,
@@ -75,10 +75,10 @@
         "repeat": 0,
         "rounds": 2,
         "sample_time": 0.01,
-        "timeout": 120,
+        "timeout": 300,
         "type": "time",
         "unit": "seconds",
-        "version": "dd4e75011922a675da779ebc4113b1d82b9472564d9fef84b7b8f10f01504d2f",
+        "version": "7f71dc806b11d6ac3bfc2ad95e3a288ce6cd50d64def101b3d55074be7bcbb3f",
         "warmup_time": -1
     },
     "version": 2

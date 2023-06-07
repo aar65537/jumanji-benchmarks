@@ -2,12 +2,18 @@ import dash
 import plotly.graph_objects as go
 from dash import Input, Output, callback, dcc, html
 
-from jumanji_perf.visuals import COMMITS, PLATFORMS, figures_by_wrappers
+from jumanji_perf.visuals import (
+    COMMITS,
+    DEFAULT_COMMIT,
+    DEFAULT_PLATFORM,
+    PLATFORMS,
+    figures_by_wrappers,
+)
 
 dash.register_page(__name__)
 
-commit_input = dcc.Dropdown(COMMITS, COMMITS[0], className="commit-dropdown")
-platform_input = dcc.RadioItems(PLATFORMS, PLATFORMS[0])
+commit_input = dcc.Dropdown(COMMITS, DEFAULT_COMMIT, className="commit-dropdown")
+platform_input = dcc.RadioItems(PLATFORMS, DEFAULT_PLATFORM)
 run_graph = dcc.Graph(figure=go.Figure(), className="run-graph")
 compile_graph = dcc.Graph(figure=go.Figure(), className="compile-graph")
 

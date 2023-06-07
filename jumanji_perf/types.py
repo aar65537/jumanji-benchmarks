@@ -44,17 +44,21 @@ class Benchmark:
 
                 for param, result in zip(params, results):
                     if name == "time_rollout_compile":
-                        if int(param[0]) == 0:
+                        batch_size = int(param[0])
+                        if batch_size == 0:
+                            batch_size = 1
                             wrapper = "AutoReset"
                         elif param[1] == "True":
                             wrapper = "Vmap(AutoReset)"
                         else:
                             wrapper = "VmapAutoReset"
 
-                        param = CompileParams(int(param[0]), wrapper)
+                        param = CompileParams(batch_size, wrapper)
 
                     elif name == "time_rollout_run":
-                        if int(param[2]) == 0:
+                        batch_size = int(param[2])
+                        if batch_size == 0:
+                            batch_size = 1
                             wrapper = "AutoReset"
                         elif param[3] == "True":
                             wrapper = "Vmap(AutoReset)"
@@ -62,7 +66,7 @@ class Benchmark:
                             wrapper = "VmapAutoReset"
 
                         param = RunParams(
-                            int(param[0]), int(param[1]), int(param[2]), wrapper
+                            int(param[0]), int(param[1]), batch_size, wrapper
                         )
                     else:
                         continue
