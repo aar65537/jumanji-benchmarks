@@ -14,23 +14,20 @@ dash.register_page(__name__)
 
 commit_input = dcc.Dropdown(COMMITS, DEFAULT_COMMIT, className="commit-dropdown")
 platform_input = dcc.RadioItems(PLATFORMS, DEFAULT_PLATFORM)
-run_graph = dcc.Graph(figure=go.Figure(), className="run-graph")
-compile_graph = dcc.Graph(figure=go.Figure(), className="compile-graph")
+graph = dcc.Graph(figure=go.Figure(), className="run-graph")
 
 layout = html.Div(
     [
         html.Div([html.Label("Commit:"), commit_input]),
         html.Div([html.Label("Platform:"), platform_input]),
-        run_graph,
-        compile_graph,
+        graph,
     ],
     className="content",
 )
 
 
 @callback(
-    Output(run_graph, "figure"),
-    Output(compile_graph, "figure"),
+    Output(graph, "figure"),
     Input(commit_input, "value"),
     Input(platform_input, "value"),
 )

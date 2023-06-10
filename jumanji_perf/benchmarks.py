@@ -11,27 +11,10 @@ BATCH_SIZES = [0, 1, 10, 10**2, 10**3, 10**4, 10**5, 10**6, 10**7, 10**8]
 DOUBLE_WRAPS = [False, True]
 
 
-class CompileRolloutBenchmark:
-    params = (BATCH_SIZES, DOUBLE_WRAPS)
-    param_names = ["batch_size", "double_wrap"]
-    timeout = 120
-
-    def setup(self, batch_size: int, double_wrap: bool) -> None:
-        key = jax.random.PRNGKey(0)
-        runner = RolloutRunner(key, batch_size + 1, batch_size, double_wrap)
-
-        self.rollout = jax.jit(runner.rollout)
-
-    def time_compile(self, *_: Any) -> None:
-        self.rollout.lower().compile()
-
-    time_compile.benchmark_name = "time_rollout_compile"  # type: ignore
-
-
 class RunRolloutBenchmark:
     params = (SEED, TOTAL_STEPS, BATCH_SIZES, DOUBLE_WRAPS)
     param_names = ["seed", "total_steps", "batch_size", "double_wrap"]
-    timeout = 300
+    timeout = 120
 
     def setup(
         self, seed: int, total_steps: int, batch_size: int, double_wrap: bool

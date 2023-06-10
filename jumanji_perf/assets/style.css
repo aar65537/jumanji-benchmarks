@@ -23,7 +23,7 @@
     grid-template-areas: 
         "input1 input2"
         "output1 output1"
-        "output2 output2";
+        ". .";
     margin-left: 16rem;
     padding: 1rem 1rem;
     justify-items: center;
@@ -35,10 +35,5 @@
 
 .run-graph {
     grid-area: output1;
-    width: 100%;
-}
-
-.compile-graph {
-    grid-area: output2;
     width: 100%;
 }
