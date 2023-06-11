@@ -6,21 +6,13 @@ from math import isnan
 from typing import List
 
 COMMITS = {
-    "d22bb170": "main",
-    "77d66fde": "remove switch",
-    "d09eff0a": "improve move",
-    "c253a4d7": "implement can move",
-    "bf17fb12": "improve move + remove switch",
-    "04d7e714": "improve move + remove switch (rot coord)",
-    "c68f8cc7": "improve move + remove switch (rot coord 2)",
-    "11874c0a": "improve move + remove switch (rot coord 3)",
-    "c3614934": "remove switch 2",
-    "02c8bec2": "remove switch 3",
-    "f3daf2d3": "improve-move-2",
-    "5079b725": "improve-move take 2",
-    "75f4b0fc": "improve-move take 3",
-    "96ab9d86": "vmap over cols",
-    "32ec5aec": "vmap over rows",
+    "a1ae4440": "0: main",
+    "2e9f0186": "1: switch inside move",
+    "ca2e4ba5": "2: no mutate in cond",
+    "8f9a67bd": "3: vmap over move_left_row",
+    "e431a5e9": "4: use fori_loop",
+    "77fccd6e": "5: single pass move",
+    "88a51285": "6: implement can move",
 }
 
 

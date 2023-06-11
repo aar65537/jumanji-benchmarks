@@ -3,7 +3,7 @@
     "project": "jumanji",
     "project_url": "https://instadeepai.github.io/jumanji/",
     "repo": "https://github.com/aar65537/jumanji.git",
-    "branches": ["main", "remove-switch", "improve-move", "implement-can-move", "improve-move+remove-switch"],
+    "branches": ["perf-improvements-2048"],
     "show_commit_url": "http://github.com/aar65537/jumanji/commit/",
     "benchmark_dir": "jumanji_perf",
     "environment_type": "virtualenv",
