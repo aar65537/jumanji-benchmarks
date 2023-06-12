@@ -3,7 +3,7 @@ import jax
 import pytest
 
 from jumanji.environments.logic.game_2048.types import State
-from jumanji_perf.runners import RolloutRunner
+from jumanji_benchmarks.runners import RolloutRunner
 
 
 @pytest.fixture

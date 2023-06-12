@@ -1,1 +1,1 @@
-# Jumanji Performance Benchmarks
+# Jumanji Benchmarks

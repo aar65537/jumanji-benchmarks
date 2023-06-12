@@ -1,19 +1,43 @@
+from typing import Dict, List, Tuple
+
 import plotly.express as px
 import plotly.graph_objects as go
 
-from jumanji_perf.types import Benchmark
-
-BENCHMARKS = Benchmark.load()
-COMMITS = list({benchmark.commit for benchmark in BENCHMARKS})
-DEFAULT_COMMIT = COMMITS[0] if len(COMMITS) else None
-PLATFORMS = sorted(list({benchmark.platform for benchmark in BENCHMARKS}))
-DEFAULT_PLATFORM = PLATFORMS[0] if len(PLATFORMS) else None
-WRAPPERS = sorted(list({benchmark.wrapper for benchmark in BENCHMARKS}))
-DEFAULT_WRAPPER = WRAPPERS[0] if len(WRAPPERS) else None
-OPTIONS = {"log_x": True, "markers": True}
+from jumanji_benchmarks.data import BENCHMARKS
+from jumanji_benchmarks.settings import OPTIONS
 
 
-def figures_by_commit(platform: str, wrapper: str) -> go.Figure:
+def table_data(batch_size: int, platform: str) -> List[Dict[str, str]]:
+    entries: List[Tuple[str, float]] = []
+
+    for benchmark in BENCHMARKS:
+        if benchmark.batch_size != batch_size or benchmark.platform != platform:
+            continue
+        if benchmark.batch_size == 1:
+            if benchmark.wrapper != "AutoReset":
+                continue
+        else:
+            if benchmark.platform == "cpu" and benchmark.wrapper != "VmapAutoReset":
+                continue
+            if benchmark.platform == "cuda" and benchmark.wrapper != "Vmap(AutoReset)":
+                continue
+        entry = (benchmark.commit, benchmark.total_steps / benchmark.result)
+        entries.append(entry)
+
+    data = [
+        {
+            "commit": commit,
+            "rate": f"{rate:.3e}",
+            "iterative": f"{rate / entries[max(i - 1, 0)][1] - 1:.3%}",
+            "total": f"{rate / entries[0][1] - 1 :.3%}",
+        }
+        for i, (commit, rate) in enumerate(entries)
+    ]
+
+    return data
+
+
+def figure_by_commit(platform: str, wrapper: str) -> go.Figure:
     batch_sizes = []
     commits = []
     rates = []
@@ -32,7 +56,7 @@ def figures_by_commit(platform: str, wrapper: str) -> go.Figure:
     )
 
 
-def figures_by_platform(commit: str, wrapper: str) -> go.Figure:
+def figure_by_platform(commit: str, wrapper: str) -> go.Figure:
     batch_sizes = []
     platforms = []
     rates = []
@@ -51,7 +75,7 @@ def figures_by_platform(commit: str, wrapper: str) -> go.Figure:
     )
 
 
-def figures_by_wrappers(commit_hash: str, platform: str) -> go.Figure:
+def figure_by_wrappers(commit_hash: str, platform: str) -> go.Figure:
     batch_sizes = []
     wrappers = []
     rates = []
@@ -62,6 +86,7 @@ def figures_by_wrappers(commit_hash: str, platform: str) -> go.Figure:
         batch_sizes.append(benchmark.batch_size)
         wrappers.append(benchmark.wrapper)
         rates.append(benchmark.total_steps / benchmark.result)
+
     return px.line(x=batch_sizes, y=rates, color=wrappers, **OPTIONS).update_layout(
         xaxis_title="Batch Size",
         yaxis_title="Step Rate (hz)",

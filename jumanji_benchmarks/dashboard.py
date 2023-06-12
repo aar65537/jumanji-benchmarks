@@ -3,7 +3,7 @@ from dash import dcc, html
 
 dashboard = dash.Dash(__name__, title="Jumanji Benchmarks", use_pages=True)
 
-header = html.H1("Jumanji 2048 Performance Benchmarks")
+header = html.H1(dcc.Link("Jumanji Benchmarks", href="/"))
 subheader = html.H2("compare by")
 pages = html.Div(
     [

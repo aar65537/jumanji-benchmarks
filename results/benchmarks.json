@@ -1,23 +1,17 @@
 {
-    "time_rollout_run": {
-        "code": "class RunRolloutBenchmark:\n    def time_run(self, *_: Any) -> None:\n        jax.block_until_ready(self.rollout())\n\n    def setup(\n        self, seed: int, total_steps: int, batch_size: int, double_wrap: bool\n    ) -> None:\n        key = jax.random.PRNGKey(seed)\n        runner = RolloutRunner(key, total_steps, batch_size, double_wrap)\n    \n        if os.environ.get(\"JAX_PLATFORM_NAME\") == \"cpu\" and total_steps != 10**5:\n            raise NotImplementedError(\"Only benchmark 100,000 total steps on cpu.\")\n        elif os.environ.get(\"JAX_PLATFORM_NAME\") == \"cuda\":\n            if runner.n_steps > 100:\n                raise NotImplementedError(\"Don't benchmark more than 100 steps on gpu.\")\n            elif total_steps == 10**8 and not double_wrap:\n                raise NotImplementedError(\n                    \"Don't benchmark single wrapped gpu with 10**8 steps.\"\n                )\n    \n        self.rollout = jax.jit(runner.rollout)\n        self.rollout.lower().compile()",
+    "benchmarks.RunRolloutBenchmark.time_run": {
+        "code": "class RunRolloutBenchmark:\n    def time_run(self, *_: Any) -> None:\n        jax.block_until_ready(self.rollout())\n\n    def setup(self, seed: int, batch_size: int, double_wrap: bool) -> None:\n        key = jax.random.PRNGKey(seed)\n    \n        if os.environ.get(\"JAX_PLATFORM_NAME\") == \"cpu\":\n            total_steps = 10**6\n        elif os.environ.get(\"JAX_PLATFORM_NAME\") == \"cuda\":\n            if batch_size > 10**4 and not double_wrap:\n                raise NotImplementedError\n            total_steps = 100 * (1 if batch_size == 0 else batch_size)\n    \n        runner = RolloutRunner(key, total_steps, batch_size, double_wrap)\n        self.rollout = jax.jit(runner.rollout)\n        self.rollout.lower().compile()",
         "min_run_count": 2,
-        "name": "time_rollout_run",
+        "name": "benchmarks.RunRolloutBenchmark.time_run",
         "number": 0,
         "param_names": [
             "seed",
-            "total_steps",
             "batch_size",
             "double_wrap"
         ],
         "params": [
             [
                 "0"
-            ],
-            [
-                "100",
-                "100000",
-                "100000000"
             ],
             [
                 "0",
@@ -27,9 +21,7 @@
                 "1000",
                 "10000",
                 "100000",
-                "1000000",
-                "10000000",
-                "100000000"
+                "1000000"
             ],
             [
                 "False",
@@ -42,7 +34,7 @@
         "timeout": 120,
         "type": "time",
         "unit": "seconds",
-        "version": "7f71dc806b11d6ac3bfc2ad95e3a288ce6cd50d64def101b3d55074be7bcbb3f",
+        "version": "b302c4aa775956e26372ef123923666ccb729b27aad5e49f7290327096ebf2ce",
         "warmup_time": -1
     },
     "version": 2

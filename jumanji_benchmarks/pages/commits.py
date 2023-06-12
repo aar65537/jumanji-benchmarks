@@ -2,19 +2,19 @@ import dash
 import plotly.graph_objects as go
 from dash import Input, Output, callback, dcc, html
 
-from jumanji_perf.visuals import (
+from jumanji_benchmarks.data import (
     DEFAULT_PLATFORM,
     DEFAULT_WRAPPER,
     PLATFORMS,
     WRAPPERS,
-    figures_by_commit,
 )
+from jumanji_benchmarks.visuals import figure_by_commit
 
-dash.register_page(__name__)
+dash.register_page(__name__, title="Jumanji Benchmarks-Commits")
 
 platform_input = dcc.RadioItems(PLATFORMS, DEFAULT_PLATFORM)
 wrapper_input = dcc.RadioItems(WRAPPERS, DEFAULT_WRAPPER)
-graph = dcc.Graph(figure=go.Figure(), className="run-graph")
+graph = dcc.Graph(figure=go.Figure(), className="graph")
 
 layout = html.Div(
     [
@@ -32,4 +32,4 @@ layout = html.Div(
     Input(wrapper_input, "value"),
 )
 def update_platform_graphs(platform: str, wrapper: str) -> go.Figure:
-    return figures_by_commit(platform, wrapper)
+    return figure_by_commit(platform, wrapper)
