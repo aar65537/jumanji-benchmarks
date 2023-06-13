@@ -19,4 +19,4 @@ dashboard.layout = html.Div([sidebar, dash.page_container])
 
 
 if __name__ == "__main__":
-    dashboard.run_server(debug=True)
+    dashboard.run_server(host="0.0.0.0", debug=True)
