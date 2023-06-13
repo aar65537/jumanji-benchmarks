@@ -4,6 +4,12 @@ This project contains benchmarks for the jumanji 2048 environment.
 
 ## Dashboard
 
+To view a dashboard displaying all benchmark results run the following command and navigate to [localhost:8050](http://localhost:8050/).
+
+```
+docker run -it --rm -p 8050:8050 ghcr.io/aar65537/jumanji-benchmarks:main
+```
+
 ## Improvements
 
 <div style="margin-left: auto;
