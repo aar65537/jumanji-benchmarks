@@ -22,7 +22,7 @@ docker run -it --rm -p 8050:8050 ghcr.io/aar65537/jumanji-benchmarks:main
 | cuda | 900.12% | 1923.08% | 706.87% |
 </div>
 
-The above figure shows the total performance increase with all changes (measured as percent increase in steps/sec). The no vmap environments were wrapped with `AutoResetWrapper`. The cpu vmap environments were wrapped with `VmapAutoResetWrapper`. The cuda vmap environments were wrapped with `AutoResetWrapper` and then `VmapWrapper`. I found that `AutoResetWrapper` had poor performance on the gpu.
+The above figure shows the total performance increase with all changes (measured as percent increase in steps/sec). The no vmap environments were wrapped with `AutoResetWrapper`. The cpu vmap environments were wrapped with `VmapAutoResetWrapper`. The cuda vmap environments were wrapped with `AutoResetWrapper` and then `VmapWrapper`. I found that `VmapAutoResetWrapper` had poor performance on the gpu.
 
 The improvements fall into three main categories: minimizing conditional logic, preferring `jax.vmap` over `jax.lax` control flow, and algorithmic improvements. Minimizing conditional logic is important because when wrapped with `jax.vmap`, all branches of a conditional expression will be evaluated. Using `jax.vmap` instead of `jax.lax` control flow seems to reduce overhead when running on the gpu. Algorithmic improvements include an optimized move algorithm and a can move algorithm that doesn't mutate the board.
 
